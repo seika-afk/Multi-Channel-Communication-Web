@@ -1,26 +1,13 @@
 'use client';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { FileUpload } from '../file-upload';
 import { Button } from '../ui/button';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '../ui/dialog';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '../ui/form';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '../ui/dialog';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
 import { Input } from '../ui/input';
 import { ServerForm, serverFormSchema } from '@/lib/servers/validations';
 import { useRouter } from 'next/navigation';
@@ -46,6 +33,7 @@ export function InitialModal() {
   async function onSubmit(values: ServerForm) {
     try {
       await axios.post('/api/servers', values);
+
       form.reset();
       router.refresh();
       window.location.reload();
@@ -60,11 +48,9 @@ export function InitialModal() {
 
   return (
     <Dialog open>
-    <DialogContent className="bg-white text-black p-0 overflow-hidden sm:max-w-[468px]">
-    <DialogHeader className="pt-8 px-6">
-          <DialogTitle className="text-2xl text-center font-bold">
-            Customize your server
-          </DialogTitle>
+      <DialogContent className="bg-white text-black p-0 overflow-hidden">
+        <DialogHeader className="pt-8 px-6">
+          <DialogTitle className="text-2xl text-center font-bold">Customize your server</DialogTitle>
           <DialogDescription className="text-center text-zinc-500">
             Give your server a personality with a name and an image. You can always change it later.
           </DialogDescription>
@@ -79,16 +65,13 @@ export function InitialModal() {
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
-                        <FileUpload
-                          endpoint="serverImage"
-                          value={field.value}
-                          onChange={field.onChange}
-                        />
+                        <FileUpload endpoint="serverImage" value={field.value} onChange={field.onChange} />
                       </FormControl>
                     </FormItem>
                   )}
                 />
               </div>
+
               <FormField
                 control={form.control}
                 name="name"
